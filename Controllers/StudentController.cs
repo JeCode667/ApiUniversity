@@ -13,7 +13,6 @@ public StudentController(UniversityContext context)
 _context = context;
 }
 
-
 // GET: api/item
 [HttpGet]
 [SwaggerOperation(
@@ -22,12 +21,11 @@ Description = "Returns all Students and their characteristics")
 ]
 [SwaggerResponse(StatusCodes.Status200OK, "Students found", typeof(Student))]
 [SwaggerResponse(StatusCodes.Status404NotFound, "Students not found")]
-public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+public async Task<ActionResult<IEnumerable<StudentDTO>>> GetStudents()
 {
 // Get items
-var Students = _context.Students;
-Console.WriteLine(Students);
-return await Students.ToListAsync();
+var students = _context.Students.Select(x => new StudentDTO(x));
+return await students.ToListAsync();
 }
 
 // GET: api/Student/2
@@ -38,7 +36,7 @@ Description = "Returns a specific Student targeted by its identifier")
 ]
 [SwaggerResponse(StatusCodes.Status200OK, "Student found", typeof(Student))]
 [SwaggerResponse(StatusCodes.Status404NotFound, "Student not found")]
-public async Task<ActionResult<Student>> GetStudent([SwaggerParameter("The unique identifier of the Student", Required = true)] int id)
+public async Task<ActionResult<StudentDTO>> GetStudent([SwaggerParameter("The unique identifier of the Student", Required = true)] int id)
 {
 // Find a specific item
 // SingleAsync() throws an exception if no item is found (which is possible, depending on id)
@@ -50,7 +48,7 @@ if (Student == null)
 return NotFound();
 
 
-return Student;
+return new StudentDTO(Student);
 }
 
 // POST: api/item
@@ -61,13 +59,14 @@ Description = "Create a Student by adding its characteristics")
 ]
 [SwaggerResponse(StatusCodes.Status200OK, "Student created", typeof(Student))]
 [SwaggerResponse(StatusCodes.Status404NotFound, "Student not created", typeof(Student))]
-public async Task<ActionResult<Student>> PostStudent([SwaggerParameter("The new Student", Required = true)] Student Student)
+public async Task<ActionResult<StudentDTO>> PostStudent([SwaggerParameter("The new Student", Required = true)] StudentDTO StudentDTO)
 {
+    Student Student = new(StudentDTO);
 _context.Students.Add(Student);
 await _context.SaveChangesAsync();
 
 
-return CreatedAtAction(nameof(GetStudent), new { id = Student.Id }, Student);
+return CreatedAtAction(nameof(GetStudent), new { id = Student.Id }, new StudentDTO(Student));
 }
 
 // PUT: api/item/2
@@ -78,11 +77,12 @@ Description = "Updates a specific Student targeted by its identifier")
 ]
 [SwaggerResponse(StatusCodes.Status200OK, "Student updated", typeof(Student))]
 [SwaggerResponse(StatusCodes.Status404NotFound, "Student not found")]
-public async Task<IActionResult> PutStudent([SwaggerParameter("The unique identifier of the Student", Required = true)] int id, [SwaggerParameter("The uptated Student", Required = true)] Student Student)
+public async Task<IActionResult> PutStudent([SwaggerParameter("The unique identifier of the Student", Required = true)] int id, [SwaggerParameter("The uptated Student", Required = true)] StudentDTO StudentDTO)
 {
-if (id != Student.Id)
+if (id != StudentDTO.Id)
 return BadRequest();
 
+Student Student = new(StudentDTO);
 
 _context.Entry(Student).State = EntityState.Modified;
 

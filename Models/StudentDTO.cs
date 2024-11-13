@@ -6,6 +6,7 @@ public class StudentDTO
     public int Id { get; set; }
     public string LastName { get; set; } = null!;
     public string FirstName { get; set; } = null!;
+    public string Email { get; set; }
     public DateTime EnrollmentDate { get; set; }
 
     public StudentDTO() { }
@@ -15,7 +16,7 @@ public class StudentDTO
         Id = student.Id;
         LastName = student.LastName;
         FirstName = student.FirstName;
+        Email = student.Email;
         EnrollmentDate = student.EnrollmentDate;
-
     }
 }

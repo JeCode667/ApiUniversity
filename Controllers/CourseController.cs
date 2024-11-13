@@ -44,10 +44,10 @@ public class CourseController : ControllerBase
 
     // POST: api/course
     [HttpPost]
-    public async Task<ActionResult<Course>> PostCourse(CourseDTO courseDTO)
+    public async Task<ActionResult<CourseDTO>> PostCourse(CourseDTO courseDTO)
     {
         Course course = new(courseDTO);
-
+        course.Department = await _context.Departments.SingleOrDefaultAsync(t => t.Id == courseDTO.DepartmentId);
         _context.Courses.Add(course);
         await _context.SaveChangesAsync();
 
@@ -64,6 +64,7 @@ public class CourseController : ControllerBase
         }
 
         Course course = new(courseDTO);
+        course.Department = await _context.Departments.SingleOrDefaultAsync(t => t.Id == courseDTO.DepartmentId);
 
         _context.Entry(course).State = EntityState.Modified;
 

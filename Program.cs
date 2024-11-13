@@ -3,7 +3,7 @@ using ApiUniversity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//SeedData.Init();
+SeedData.Init();
 
 // Add services to the container.
 // The aim of this is to add API controllers to the application

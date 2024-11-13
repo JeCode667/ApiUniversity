@@ -1,18 +1,15 @@
-
 namespace ApiUniversity.Models;
 
 // Data Transfer Object class, used to bypass navigation properties validation during API calls
-public class CourseDTO
+public class TaughtCourseDTO
 {
 
     public int Id { get; set; }
-    public string Title { get; set; } = null!;
-    public int Credits { get; set; }
-    public int DepartmentId { get; set; }
+    public int CourseIds { get; set; }
 
-    public CourseDTO() { }
+    public TaughtCourseDTO() { }
 
-    public CourseDTO(Course course)
+    public TaughtCourseDTO(Course course)
     {
         Id = course.Id;
         Title = course.Title;

@@ -3,7 +3,7 @@ using ApiUniversity.Models;
 namespace ApiUniversity.Data;
 
 public static class SeedData
-{
+{/*
     // Test data for part 1 and 2
     public static void Init()
     {
@@ -14,33 +14,30 @@ public static class SeedData
             return;   // DB already filled
         }
 
+        
         // Add students
         Student carson = new()
         {
             FirstName = "Alexander",
             LastName = "Carson",
-            Email = "acarson@email.com",
             EnrollmentDate = DateTime.Parse("2016-09-01"),
         };
         Student alonso = new()
         {
             FirstName = "Meredith",
             LastName = "Alonso",
-            Email = "malonso@email.com",
             EnrollmentDate = DateTime.Parse("2018-09-01"),
         };
         Student anand = new()
         {
             FirstName = "Arturo",
             LastName = "Anand",
-            Email = "aanand@email.com",
             EnrollmentDate = DateTime.Parse("2019-09-01"),
         };
         Student barzdukas = new()
         {
             FirstName = "Gytis",
             LastName = "Barzdukas",
-            Email = "gbartzdukas@email.com",
             EnrollmentDate = DateTime.Parse("2018-09-01"),
         };
         context.Students.AddRange(
@@ -124,8 +121,8 @@ public static class SeedData
         // Commit changes into DB
         context.SaveChanges();
     }
-
-    /*
+    */
+    
     // Test data for part 3
     public static void Init()
     {
@@ -284,5 +281,4 @@ public static class SeedData
         // Commit changes into DB
         context.SaveChanges();
     }
-    */
 }
